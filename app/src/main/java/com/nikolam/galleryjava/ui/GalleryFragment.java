@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
@@ -18,10 +19,11 @@ import android.view.ViewGroup;
 import com.nikolam.galleryjava.R;
 import com.nikolam.galleryjava.databinding.GalleryFragmentBinding;
 import com.nikolam.galleryjava.ui.adapter.ImageAdapter;
+import com.nikolam.galleryjava.ui.adapter.ImageClickListener;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment implements ImageClickListener {
 
     private GalleryViewModel mViewModel;
 
@@ -41,14 +43,13 @@ public class GalleryFragment extends Fragment {
                 inflater, R.layout.gallery_fragment, container, false);
 
 
-        imageAdapter = new ImageAdapter();
+        imageAdapter = new ImageAdapter(this);
 
         GridLayoutManager manager = new GridLayoutManager(this.getContext(), 4);
 
         binding.setAdapter(imageAdapter);
         binding.galleryGridRecycleView.setLayoutManager(manager);
         binding.setLifecycleOwner(this);
-
 
         View view = binding.getRoot();
 
@@ -75,6 +76,9 @@ public class GalleryFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onClick(View view, String url) {
+        Navigation.findNavController(view).navigate(GalleryFragmentDirections.actionGalleryFragmentToSingleImageFragment(url));
+    }
 
 }

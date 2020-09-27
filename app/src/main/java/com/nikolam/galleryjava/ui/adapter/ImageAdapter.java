@@ -18,9 +18,13 @@ import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     private ArrayList<String> imageUrls = new ArrayList<>();
+    private ImageClickListener clickListener;
+
+    public ImageAdapter(ImageClickListener listener){
+        this.clickListener = listener;
+    }
 
     public void setImages(ArrayList<String> urls){
-        Log.d("Images", urls.toString());
         this.imageUrls.addAll(urls);
         notifyDataSetChanged();
     }
@@ -51,14 +55,23 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     protected class ImageViewHolder extends RecyclerView.ViewHolder {
 
         private GalleryImageItemBinding binding;
+        private String url;
 
-        public ImageViewHolder(@NonNull GalleryImageItemBinding bind) {
+        public ImageViewHolder(@NonNull final GalleryImageItemBinding bind) {
             super(bind.getRoot());
+
             binding = bind;
+
+            binding.getRoot().setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    clickListener.onClick(binding.getRoot(),url);
+                }
+            });
         }
 
         public void bindData(String url){
-            Log.d("BindData", url);
+            this.url = url;
             binding.setImageUrl(url);
             binding.executePendingBindings();
         }
