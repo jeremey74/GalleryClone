@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import com.nikolam.galleryjava.R;
 import com.nikolam.galleryjava.databinding.SingleImageFragmentBinding;
 import com.nikolam.galleryjava.ui.adapter.ImageAdapter;
+import com.nikolam.galleryjava.ui.adapter.SingleImageAdapter;
 
 public class SingleImageFragment extends Fragment {
 
@@ -26,6 +28,8 @@ public class SingleImageFragment extends Fragment {
     private SingleImageFragmentBinding binding;
 
     private SingleImageViewModel mViewModel;
+
+    private SingleImageAdapter adapter;
 
     public static SingleImageFragment newInstance() {
         return new SingleImageFragment();
@@ -39,6 +43,8 @@ public class SingleImageFragment extends Fragment {
                 inflater, R.layout.single_image_fragment, container, false);
 
         binding.setLifecycleOwner(this);
+
+        adapter = new SingleImageAdapter(getContext());
 
         View view = binding.getRoot();
 
@@ -59,6 +65,21 @@ public class SingleImageFragment extends Fragment {
         url = SingleImageFragmentArgs.fromBundle(getArguments()).getImageUrl();
 
         binding.setImageUrl(url);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        adapter.setImageUrls(mViewModel.getAllImageUrls());
+        mViewModel.setCurrentPosition(url);
+
+        adapter.setCurrentPos(mViewModel.currentUrlPos);
+
+        binding.viewPager.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
 
     }
 }

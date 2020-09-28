@@ -32,13 +32,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Images", "Create");
        return new ImageViewHolder(GalleryImageItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        Log.d("Images", "bind");
         holder.bindData(imageUrls.get(position));
     }
 
