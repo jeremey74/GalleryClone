@@ -6,5 +6,17 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.nikolam.galleryjava.ui.GalleryFragment"
-        android:label="GalleryFragment" />
+        android:label="GalleryFragment" >
+        <action
+            android:id="@+id/action_galleryFragment_to_singleImageFragment"
+            app:destination="@id/singleImageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleImageFragment"
+        android:name="com.nikolam.galleryjava.ui.SingleImageFragment"
+        android:label="SingleImageFragment" >
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>

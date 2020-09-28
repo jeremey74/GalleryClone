@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.nikolam.galleryjava.data.loader.ImageLoader;
 
@@ -15,10 +16,20 @@ public class GalleryViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public ArrayList<String> getAllImageUrls(){
+
+    // Create a LiveData with a String
+    private MutableLiveData<ArrayList<String>> imageUrlsLiveData;
+
+    public MutableLiveData<ArrayList<String>> getAllImageUrls(){
         ImageLoader loader = new ImageLoader();
 
-        return loader.getAllShownImagesPath(getApplication().getApplicationContext());
+        if(imageUrlsLiveData == null){
+            imageUrlsLiveData = new MutableLiveData<>();
+        }
+
+        imageUrlsLiveData.setValue(loader.getAllShownImagesPath(getApplication().getApplicationContext()));
+
+        return imageUrlsLiveData;
     }
 
 }
