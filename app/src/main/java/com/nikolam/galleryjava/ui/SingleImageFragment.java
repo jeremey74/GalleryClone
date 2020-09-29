@@ -75,8 +75,6 @@ public class SingleImageFragment extends Fragment {
         adapter.setImageUrls(mViewModel.getAllImageUrls());
         mViewModel.setCurrentPosition(url);
 
-        adapter.setCurrentPos(mViewModel.currentUrlPos);
-
         binding.viewPager.setAdapter(adapter);
 
         binding.viewPager.setCurrentItem(mViewModel.currentUrlPos);

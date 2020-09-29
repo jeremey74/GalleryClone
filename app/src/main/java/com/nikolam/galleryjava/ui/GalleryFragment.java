@@ -23,7 +23,7 @@ import com.nikolam.galleryjava.ui.adapter.ImageClickListener;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment implements ImageClickListener {
+public class GalleryFragment extends Fragment {
 
     private GalleryViewModel mViewModel;
 
@@ -43,7 +43,7 @@ public class GalleryFragment extends Fragment implements ImageClickListener {
                 inflater, R.layout.gallery_fragment, container, false);
 
 
-        imageAdapter = new ImageAdapter(this);
+        imageAdapter = new ImageAdapter();
 
         GridLayoutManager manager = new GridLayoutManager(this.getContext(), 4);
 
@@ -75,10 +75,4 @@ public class GalleryFragment extends Fragment implements ImageClickListener {
         });
 
     }
-
-    @Override
-    public void onClick(View view, String url) {
-        Navigation.findNavController(view).navigate(GalleryFragmentDirections.actionGalleryFragmentToSingleImageFragment(url));
-    }
-
 }
