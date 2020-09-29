@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.nikolam.galleryjava.data.loader.ImageLoader;
+import com.nikolam.galleryjava.data.loader.model.GalleryImage;
 
 import java.util.ArrayList;
 
@@ -16,11 +17,11 @@ public class GalleryViewModel extends AndroidViewModel {
         super(application);
     }
 
+    public ArrayList<String> selectedImages = new ArrayList<>();
 
-    // Create a LiveData with a String
-    private MutableLiveData<ArrayList<String>> imageUrlsLiveData;
+    private MutableLiveData<ArrayList<GalleryImage>> imageUrlsLiveData;
 
-    public MutableLiveData<ArrayList<String>> getAllImageUrls(){
+    public MutableLiveData<ArrayList<GalleryImage>> getAllImages(){
         ImageLoader loader = new ImageLoader();
 
         if(imageUrlsLiveData == null){

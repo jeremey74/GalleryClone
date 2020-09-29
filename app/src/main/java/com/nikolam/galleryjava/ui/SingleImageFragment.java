@@ -72,7 +72,7 @@ public class SingleImageFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        adapter.setImageUrls(mViewModel.getAllImageUrls());
+        adapter.setImages(mViewModel.getAllImageUrls());
         mViewModel.setCurrentPosition(url);
 
         binding.viewPager.setAdapter(adapter);
