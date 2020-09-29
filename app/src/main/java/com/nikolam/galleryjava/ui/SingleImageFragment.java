@@ -79,6 +79,8 @@ public class SingleImageFragment extends Fragment {
 
         binding.viewPager.setAdapter(adapter);
 
+        binding.viewPager.setCurrentItem(mViewModel.currentUrlPos);
+
         adapter.notifyDataSetChanged();
 
     }

@@ -18,11 +18,6 @@ public class SingleImageAdapter extends PagerAdapter {
 
     private Context context;
     private ArrayList<String> imageUrls;
-    private int currentPos = 0;
-
-    public void setCurrentPos(int curPos){
-        this.currentPos = curPos;
-    }
 
     public void setImageUrls(ArrayList<String> imageUrls){
         this.imageUrls = imageUrls;
@@ -56,4 +51,5 @@ public class SingleImageAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView(((ImageView) object));
     }
+
 }
