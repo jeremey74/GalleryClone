@@ -5,12 +5,14 @@
 
     <data>
         <variable name="imageUrl" type="String"/>
+        <variable name="selected" type="boolean"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="9dp">
+        android:padding="9dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imageView"
@@ -21,7 +23,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_launcher_background" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 </layout>
