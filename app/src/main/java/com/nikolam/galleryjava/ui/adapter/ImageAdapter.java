@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nikolam.galleryjava.R;
 import com.nikolam.galleryjava.databinding.GalleryImageItemBinding;
+import com.nikolam.galleryjava.ui.GalleryFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +20,9 @@ import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     private ArrayList<String> imageUrls = new ArrayList<>();
-    private ImageClickListener clickListener;
-
-    public ImageAdapter(ImageClickListener listener){
-        this.clickListener = listener;
-    }
+//    public ImageAdapter(ImageClickListener listener){
+//        this.clickListener = listener;
+//    }
 
     public void setImages(ArrayList<String> urls){
         this.imageUrls.addAll(urls);
@@ -54,18 +54,38 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
         private GalleryImageItemBinding binding;
         private String url;
+        private boolean selected = false;
 
         public ImageViewHolder(@NonNull final GalleryImageItemBinding bind) {
             super(bind.getRoot());
 
             binding = bind;
 
-            binding.getRoot().setOnClickListener(new View.OnClickListener(){
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickListener.onClick(binding.getRoot(),url);
+                    if(!selected) {
+                        Navigation.findNavController(v).navigate(GalleryFragmentDirections.actionGalleryFragmentToSingleImageFragment(url));
+                    } else {
+                        selected = false;
+                        binding.setSelected(false);
+                    }
                 }
             });
+
+
+            binding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    selected = !selected;
+                    binding.setSelected(selected);
+
+                    return true;
+                }
+            });
+
+
         }
 
         public void bindData(String url){

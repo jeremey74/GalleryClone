@@ -28,8 +28,8 @@ public class ViewBindings {
     @BindingAdapter("selectedImageView")
     public static void selectedImageView(ImageView view, boolean selected) {
        if(selected){
-           view.setScaleX(0.5f);
-           view.setScaleY(0.5f);
+           view.setScaleX(0.7f);
+           view.setScaleY(0.7f);
        } else {
            view.setScaleX(1.0f);
            view.setScaleY(1.0f);
