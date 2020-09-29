@@ -3,6 +3,7 @@ package com.nikolam.galleryjava.ui.bindings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,13 +25,24 @@ public class ViewBindings {
         view.setAdapter(adapter);
     }
 
-    @BindingAdapter("selected")
-    public static void imageViewSelection(ImageView view, boolean selected) {
+    @BindingAdapter("selectedImageView")
+    public static void selectedImageView(ImageView view, boolean selected) {
        if(selected){
-           view.setVisibility(View.VISIBLE);
+           view.setScaleX(0.5f);
+           view.setScaleY(0.5f);
        } else {
-           view.setVisibility(View.INVISIBLE);
+           view.setScaleX(1.0f);
+           view.setScaleY(1.0f);
        }
+    }
+
+    @BindingAdapter("selectedRadioButton")
+    public static void selectedRadioButton(RadioButton view, boolean selected) {
+        if(selected){
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.INVISIBLE);
+        }
     }
 
 }

@@ -71,6 +71,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         public void bindData(String url){
             this.url = url;
             binding.setImageUrl(url);
+            binding.setSelected(false);
             binding.executePendingBindings();
         }
 
