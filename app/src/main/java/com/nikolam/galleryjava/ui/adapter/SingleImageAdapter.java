@@ -1,26 +1,25 @@
 package com.nikolam.galleryjava.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.nikolam.galleryjava.data.loader.model.GalleryImage;
 
 import java.util.ArrayList;
 
 public class SingleImageAdapter extends PagerAdapter {
 
     private Context context;
-    private ArrayList<String> imageUrls;
+    private ArrayList<GalleryImage> images;
 
-    public void setImageUrls(ArrayList<String> imageUrls){
-        this.imageUrls = imageUrls;
+    public void setImages(ArrayList<GalleryImage> images){
+        this.images = images;
     }
 
     public SingleImageAdapter(Context context){
@@ -29,7 +28,7 @@ public class SingleImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return imageUrls.size();
+        return images.size();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class SingleImageAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Glide.with(context).load(imageUrls.get(position)).into(imageView);
+        Glide.with(context).load(images.get(position).getmImageUrl()).into(imageView);
         container.addView(imageView,0);
         return imageView;
     }

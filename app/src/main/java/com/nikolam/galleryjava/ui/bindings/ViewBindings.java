@@ -36,13 +36,18 @@ public class ViewBindings {
        }
     }
 
-    @BindingAdapter("selectedRadioButton")
-    public static void selectedRadioButton(RadioButton view, boolean selected) {
+    @BindingAdapter({"selectedRadioButton", "isSelectingRadioButton"})
+    public static void selectedRadioButton(RadioButton view, boolean selected, boolean isSelecting) {
         if(selected){
             view.setVisibility(View.VISIBLE);
+            view.setChecked(true);
+        } else if(isSelecting){
+            view.setVisibility(View.VISIBLE);
+            view.setChecked(false);
         } else {
             view.setVisibility(View.INVISIBLE);
         }
+
     }
 
 }

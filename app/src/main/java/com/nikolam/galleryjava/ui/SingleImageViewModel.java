@@ -6,33 +6,41 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.nikolam.galleryjava.data.loader.ImageLoader;
+import com.nikolam.galleryjava.data.loader.model.GalleryImage;
 
 import java.util.ArrayList;
 
 public class SingleImageViewModel extends AndroidViewModel {
 
     // Create a LiveData with a String
-    private ArrayList<String> imageUrls;
-    int currentUrlPos;
+    private ArrayList<GalleryImage> images;
+    int currentPos;
 
     public SingleImageViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public ArrayList<String> getAllImageUrls(){
+    public ArrayList<GalleryImage> getAllImages(){
         ImageLoader loader = new ImageLoader();
 
-        if(imageUrls == null){
-            imageUrls = new ArrayList<>();
+        if(images == null){
+            images = new ArrayList<>();
         }
 
-        imageUrls.addAll(loader.getAllShownImagesPath(getApplication().getApplicationContext()));
+        images.addAll(loader.getAllShownImagesPath(getApplication().getApplicationContext()));
 
-        return imageUrls;
+        return images;
     }
 
 
     public void setCurrentPosition(String url) {
-        currentUrlPos = imageUrls.indexOf(url);
+        int k = 0;
+        for(GalleryImage i : images){
+            if(i.getmImageUrl().equals(url)){
+                currentPos = k;
+                break;
+            }
+            k++;
+        }
     }
 }

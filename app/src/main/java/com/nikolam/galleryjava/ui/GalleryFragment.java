@@ -12,18 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nikolam.galleryjava.R;
+import com.nikolam.galleryjava.data.loader.model.GalleryImage;
 import com.nikolam.galleryjava.databinding.GalleryFragmentBinding;
 import com.nikolam.galleryjava.ui.adapter.ImageAdapter;
 import com.nikolam.galleryjava.ui.adapter.ImageClickListener;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment implements ImageClickListener{
 
     private GalleryViewModel mViewModel;
 
@@ -43,7 +45,7 @@ public class GalleryFragment extends Fragment {
                 inflater, R.layout.gallery_fragment, container, false);
 
 
-        imageAdapter = new ImageAdapter();
+        imageAdapter = new ImageAdapter(this);
 
         GridLayoutManager manager = new GridLayoutManager(this.getContext(), 4);
 
@@ -66,13 +68,38 @@ public class GalleryFragment extends Fragment {
 
     public void observeData(){
 
-        mViewModel.getAllImageUrls().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+        mViewModel.getAllImages().observe(getViewLifecycleOwner(), new Observer<ArrayList<GalleryImage>>() {
             @Override
-            public void onChanged(ArrayList<String> strings) {
-                imageAdapter.setImages(strings);
+            public void onChanged(ArrayList<GalleryImage> images) {
+                imageAdapter.setImages(images);
             }
 
         });
+
+    }
+
+    @Override
+    public void selectedImage(GalleryImage image) {
+        if(mViewModel.selectedImages.isEmpty()){
+            imageAdapter.currentlyIsSelecting();
+            Log.d("Images", "currently selecting");
+        }
+
+        mViewModel.selectedImages.add(image);
+
+        Log.d("Images", mViewModel.selectedImages.toString());
+    }
+
+    @Override
+    public void deselectedImage(GalleryImage image) {
+        mViewModel.selectedImages.remove(image);
+
+        if(mViewModel.selectedImages.isEmpty()){
+            imageAdapter.currentlyNotSelecting();
+            Log.d("Images", "currently not selecting");
+        }
+
+        Log.d("Images", mViewModel.selectedImages.toString());
 
     }
 }
