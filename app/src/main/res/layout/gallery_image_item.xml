@@ -6,6 +6,7 @@
     <data>
         <variable name="imageUrl" type="String"/>
         <variable name="selected" type="boolean"/>
+        <variable name="isSelecting" type="boolean"/>
     </data>
 
     <FrameLayout
@@ -30,6 +31,7 @@
         <RadioButton
             android:id="@+id/radioButton"
             selectedRadioButton="@{selected}"
+            isSelectingRadioButton="@{isSelecting}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"

@@ -6,14 +6,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.nikolam.galleryjava.data.loader.model.GalleryImage;
+
 import java.util.ArrayList;
 
 public class ImageLoader {
-    public ArrayList<String> getAllShownImagesPath(Context context) {
+    public ArrayList<GalleryImage> getAllShownImagesPath(Context context) {
         Uri uri;
         Cursor cursor;
         int column_index_data, column_index_folder_name;
-        ArrayList<String> listOfAllImages = new ArrayList<String>();
+        ArrayList<GalleryImage> listOfAllImages = new ArrayList<GalleryImage>();
         String absolutePathOfImage = null;
         uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
@@ -29,7 +31,7 @@ public class ImageLoader {
         while (cursor.moveToNext()) {
             absolutePathOfImage = cursor.getString(column_index_data);
 
-            listOfAllImages.add(absolutePathOfImage);
+            listOfAllImages.add(new GalleryImage(false, false ,absolutePathOfImage));
         }
         return listOfAllImages;
     }
