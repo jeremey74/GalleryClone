@@ -1,5 +1,6 @@
 package com.nikolam.galleryjava.ui;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,6 +37,11 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
 
     private ImageAdapter imageAdapter;
 
+    private MenuItem deleteItem;
+
+    private Toolbar toolbar;
+
+
     public static GalleryFragment newInstance() {
         return new GalleryFragment();
     }
@@ -44,8 +53,9 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.gallery_fragment, container, false);
 
-
         imageAdapter = new ImageAdapter(this);
+
+        setHasOptionsMenu (true);
 
         GridLayoutManager manager = new GridLayoutManager(this.getContext(), 4);
 
@@ -54,6 +64,11 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
         binding.setLifecycleOwner(this);
 
         View view = binding.getRoot();
+
+
+        //toolbar
+        toolbar = view.findViewById(R.id.gallery_toolbar);
+        toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(false);
 
         return view;
     }
@@ -67,6 +82,18 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
 
 
     public void observeData(){
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId() == R.id.delete_selected){
+                    Log.d("Images", mViewModel.selectedImages.toString());
+                }
+
+                return true;
+            }
+        });
+
 
         mViewModel.getAllImages().observe(getViewLifecycleOwner(), new Observer<ArrayList<GalleryImage>>() {
             @Override
@@ -82,12 +109,12 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
     public void selectedImage(GalleryImage image) {
         if(mViewModel.selectedImages.isEmpty()){
             imageAdapter.currentlyIsSelecting();
-            Log.d("Images", "currently selecting");
+            toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(true);
         }
 
+        int size = mViewModel.selectedImages.size() + 1;
+        toolbar.getMenu().findItem(R.id.delete_selected).setTitle("Delete All (" + size + ")");
         mViewModel.selectedImages.add(image);
-
-        Log.d("Images", mViewModel.selectedImages.toString());
     }
 
     @Override
@@ -96,10 +123,14 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
 
         if(mViewModel.selectedImages.isEmpty()){
             imageAdapter.currentlyNotSelecting();
-            Log.d("Images", "currently not selecting");
+            toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(true);
         }
 
-        Log.d("Images", mViewModel.selectedImages.toString());
+    }
 
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        Log.d("Images", "on prepare");
+        super.onPrepareOptionsMenu(menu);
     }
 }
