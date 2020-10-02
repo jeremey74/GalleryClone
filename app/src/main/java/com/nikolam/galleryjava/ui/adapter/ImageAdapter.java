@@ -126,7 +126,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Images", String.valueOf(selected) + " " + isSelecting);
+                 //   Log.d("Images", String.valueOf(selected) + " " + isSelecting);
                     if(!selected && !isSelecting) {
                         Navigation.findNavController(v).navigate(GalleryFragmentDirections.actionGalleryFragmentToSingleImageFragment(url));
                     } else if(!selected && isSelecting){ // and selecting, select

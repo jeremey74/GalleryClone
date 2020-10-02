@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +30,7 @@ import com.nikolam.galleryjava.databinding.GalleryFragmentBinding;
 import com.nikolam.galleryjava.ui.adapter.ImageAdapter;
 import com.nikolam.galleryjava.ui.adapter.ImageClickListener;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment implements ImageClickListener{
@@ -87,7 +91,24 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.delete_selected){
-                    Log.d("Images", mViewModel.selectedImages.toString());
+                    //Uri root = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    String root = Environment.getExternalStorageDirectory().toString();
+                    for(GalleryImage i : mViewModel.selectedImages){
+                        //getActivity().getApplicationContext().deleteFile(root + i.getmImageUrl());
+                        File file = new File(root + i.getmImageUrl());
+                        Log.d("Images", file.toString());
+                        Log.d("Images", String.valueOf(file.exists()));
+                        Log.d("Images", i.getContentUri());
+                        if (file.exists()) {
+                            if (file.delete()) {
+                                System.out.println("file Deleted :" + file.getPath());
+                            } else {
+                                System.out.println("file not Deleted :" + file.getPath());
+                            }
+                        }
+                    }
+//                    Log.d("Images", mViewModel.selectedImages.toString());
+                    Log.d("Images", mViewModel.selectedImages.get(0).getmImageUrl());
                 }
 
                 return true;
