@@ -21,6 +21,7 @@ public class ImageLoader {
 
         String[] projection = { MediaStore.MediaColumns.DATA,
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
+
         };
 
         cursor = context.getContentResolver().query(uri, projection, null,
@@ -32,10 +33,8 @@ public class ImageLoader {
 
         while (cursor.moveToNext()) {
             absolutePathOfImage = cursor.getString(column_index_data);
-         //   String externalURI = cursor.getString();
-            String externalURI = "cursor.getString()";
 
-            listOfAllImages.add(new GalleryImage(false, false , absolutePathOfImage, externalURI));
+            listOfAllImages.add(new GalleryImage(false, false , absolutePathOfImage, ""));
         }
 
 

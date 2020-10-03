@@ -26,6 +26,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     public void setImages(ArrayList<GalleryImage> imgs){
+        images.clear();
         this.images.addAll(imgs);
         notifyDataSetChanged();
     }
@@ -67,8 +68,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         }
         notifyItemChanged(k);
     }
-
-
 
     @NonNull
     @Override
