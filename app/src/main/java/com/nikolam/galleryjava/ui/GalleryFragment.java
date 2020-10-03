@@ -78,6 +78,7 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
         //toolbar
         toolbar = view.findViewById(R.id.gallery_toolbar);
         toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(false);
+        toolbar.getMenu().findItem(R.id.share).setEnabled(false);
 
         return view;
     }
@@ -97,6 +98,9 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.delete_selected) {
                     mViewModel.deleteSelectedImages();
+                    toolbar.getMenu().findItem(R.id.share).setEnabled(false);
+                    toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(false);
+                    toolbar.getMenu().findItem(R.id.delete_selected).setTitle("Delete All");
                     imageAdapter.currentlyNotSelecting();
                 } else if(item.getItemId() == R.id.share){
                     try
@@ -110,8 +114,6 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
                         Uri contentUri = mViewModel.selectedImages.get(0).getContentUri();
                         sharingIntent.putExtra("android.intent.extra.STREAM", contentUri);
                         startActivity(Intent.createChooser(sharingIntent, "Share using"));
-
-
                     }
                     catch (Exception e)
                     {
@@ -140,6 +142,9 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
         if(mViewModel.selectedImages.isEmpty()){
             imageAdapter.currentlyIsSelecting();
             toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(true);
+            toolbar.getMenu().findItem(R.id.share).setEnabled(true);
+        } else {
+            toolbar.getMenu().findItem(R.id.share).setEnabled(false);
         }
 
         int size = mViewModel.selectedImages.size() + 1;
@@ -153,7 +158,10 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
 
         if(mViewModel.selectedImages.isEmpty()){
             imageAdapter.currentlyNotSelecting();
-            toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(true);
+            toolbar.getMenu().findItem(R.id.delete_selected).setEnabled(false);
+            toolbar.getMenu().findItem(R.id.share).setEnabled(false);
+        } else if(mViewModel.selectedImages.size() == 1){
+            toolbar.getMenu().findItem(R.id.share).setEnabled(true);
         }
 
     }
