@@ -4,9 +4,16 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
 
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/delete_selected"
-        android:title="Delete all"
+    <item
+        android:id="@+id/delete_selected"
         android:icon="@drawable/ic_baseline_delete_24"
-        app:showAsAction="never"/>
+        android:title="Delete all"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_baseline_send_24"
+        android:title="Send Image"
+        app:showAsAction="never" />
+
 
 </menu>
