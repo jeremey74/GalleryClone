@@ -9,4 +9,4 @@ Long press to select, after the first selection you can just tap on the other im
 
 
 
-![Selection Demo](screenshots/gallery2.gif)
+![Selection Demo](screenshots/gallery3.gif)
