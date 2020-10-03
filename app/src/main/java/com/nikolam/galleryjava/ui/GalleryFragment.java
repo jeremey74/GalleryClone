@@ -107,7 +107,7 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
                         String type = mime.getMimeTypeFromExtension(ext);
                         Intent sharingIntent = new Intent("android.intent.action.SEND");
                         sharingIntent.setType(type);
-                        Uri contentUri = getUriForFile(requireContext(), "com.nikolam.fileprovider", myFile);
+                        Uri contentUri = mViewModel.selectedImages.get(0).getContentUri();
                         sharingIntent.putExtra("android.intent.extra.STREAM", contentUri);
                         startActivity(Intent.createChooser(sharingIntent, "Share using"));
 
