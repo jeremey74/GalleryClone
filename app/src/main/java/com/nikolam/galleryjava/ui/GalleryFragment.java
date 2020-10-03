@@ -90,25 +90,9 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(item.getItemId() == R.id.delete_selected){
-                    //Uri root = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    String root = Environment.getExternalStorageDirectory().toString();
-                    for(GalleryImage i : mViewModel.selectedImages){
-                        //getActivity().getApplicationContext().deleteFile(root + i.getmImageUrl());
-                        File file = new File(root + i.getmImageUrl());
-                        Log.d("Images", file.toString());
-                        Log.d("Images", String.valueOf(file.exists()));
-                        Log.d("Images", i.getContentUri());
-                        if (file.exists()) {
-                            if (file.delete()) {
-                                System.out.println("file Deleted :" + file.getPath());
-                            } else {
-                                System.out.println("file not Deleted :" + file.getPath());
-                            }
-                        }
-                    }
-//                    Log.d("Images", mViewModel.selectedImages.toString());
-                    Log.d("Images", mViewModel.selectedImages.get(0).getmImageUrl());
+                if(item.getItemId() == R.id.delete_selected) {
+                    mViewModel.deleteSelectedImages();
+                    imageAdapter.currentlyNotSelecting();
                 }
 
                 return true;
@@ -153,5 +137,12 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         Log.d("Images", "on prepare");
         super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mViewModel.clearData();
     }
 }
