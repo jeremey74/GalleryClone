@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,6 +24,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
 import com.nikolam.galleryjava.R;
 import com.nikolam.galleryjava.data.loader.model.GalleryImage;
@@ -32,6 +35,8 @@ import com.nikolam.galleryjava.ui.adapter.ImageClickListener;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import static androidx.core.content.FileProvider.getUriForFile;
 
 public class GalleryFragment extends Fragment implements ImageClickListener{
 
@@ -93,6 +98,26 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
                 if(item.getItemId() == R.id.delete_selected) {
                     mViewModel.deleteSelectedImages();
                     imageAdapter.currentlyNotSelecting();
+                } else if(item.getItemId() == R.id.share){
+                    try
+                    {
+                        File myFile = new File(mViewModel.selectedImages.get(0).getmImageUrl());
+                        MimeTypeMap mime = MimeTypeMap.getSingleton();
+                        String ext = myFile.getName().substring(myFile.getName().lastIndexOf(".") + 1);
+                        String type = mime.getMimeTypeFromExtension(ext);
+                        Intent sharingIntent = new Intent("android.intent.action.SEND");
+                        sharingIntent.setType(type);
+                        Uri contentUri = getUriForFile(requireContext(), "com.nikolam.fileprovider", myFile);
+                        sharingIntent.putExtra("android.intent.extra.STREAM", contentUri);
+                        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("Images", e.getLocalizedMessage());
+                    }
                 }
 
                 return true;
