@@ -23,15 +23,6 @@
                 android:resource="@xml/gallery_app_widget_info" />
         </receiver>
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.nikolam.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
 
         <activity android:name=".MainActivity">
             <intent-filter>

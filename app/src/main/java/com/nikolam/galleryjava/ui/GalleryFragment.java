@@ -114,6 +114,7 @@ public class GalleryFragment extends Fragment implements ImageClickListener{
                         Uri contentUri = mViewModel.selectedImages.get(0).getContentUri();
                         sharingIntent.putExtra("android.intent.extra.STREAM", contentUri);
                         startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                        Log.d("Images", contentUri.toString());
                     }
                     catch (Exception e)
                     {

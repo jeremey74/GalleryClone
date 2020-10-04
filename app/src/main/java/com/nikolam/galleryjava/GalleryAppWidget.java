@@ -21,7 +21,7 @@ public class GalleryAppWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.gallery_app_widget);
       //  views.setImageViewUri(R.id.widget_imageView);
-        views.setImageViewUri(R.id.widget_imageView, Uri.EMPTY);
+      views.setImageViewUri(R.id.widget_imageView, Uri.parse("content://media/external/images/media/76"));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
